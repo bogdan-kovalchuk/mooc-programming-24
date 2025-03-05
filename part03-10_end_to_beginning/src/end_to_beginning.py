@@ -1,1 +1,7 @@
-# Write your solution here
+# End to beginning
+string = input("Please type in a string:")
+
+i = len(string) - 1
+while i >= 0:
+    print(string[i])
+    i -= 1
