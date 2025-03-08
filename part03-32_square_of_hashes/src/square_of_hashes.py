@@ -1,4 +1,8 @@
-# Write your solution here
-# You can test your function by calling it within the following block
+# A square of hashes
+def hash_square(num: int):
+    for i in range(num):
+        print(num * "#")
+
+
 if __name__ == "__main__":
     hash_square(5)
