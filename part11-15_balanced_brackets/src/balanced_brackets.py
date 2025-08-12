@@ -1,27 +1,19 @@
 def balanced_brackets(my_string: str) -> bool:
-    b = [ch for ch in my_string if ch in "()[]"]
-    if not b:
+    if len(my_string) == 0:
         return True
 
-    if len(b) % 2 == 1:
-        return False
+    if not my_string[0] in "()[]":
+        return balanced_brackets(my_string[1:])
 
-    pairs = {")": "(", "]": "["}
-    opens, closes = set("(["), set(")]")
+    if not my_string[-1] in "()[]":
+        return balanced_brackets(my_string[:-1])
 
-    def rec(arr):
-        if not arr:
-            return True
+    if my_string[0] == "(" and my_string[-1] == ")":
+        return balanced_brackets(my_string[1:-1])
+    if my_string[0] == "[" and my_string[-1] == "]":
+        return balanced_brackets(my_string[1:-1])
 
-        if arr[0] in closes or arr[-1] in opens:
-            return False
-
-        if pairs.get(arr[-1]) != arr[0]:
-            return False
-
-        return rec(arr[1:-1])
-
-    return rec(b)
+    return False
 
 
 if __name__ == "__main__":
