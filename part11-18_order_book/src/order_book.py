@@ -38,8 +38,30 @@ class OrderBook:
     def mark_finished(self, id):
         idx_id = id - 1
         if idx_id >= len(self.orders):
-            raise ValueError("The input was negative: " + str(n))
+            raise ValueError("Id out of range")
         self.orders[idx_id].mark_finished()
+
+    def unfinished_orders(self):
+        return [task for task in self.orders if not task.is_finished()]
+
+    def finished_orders(self):
+        return [task for task in self.orders if task.is_finished()]
+
+    def status_of_programmer(self, programmer):
+        n_finished, n_unfinished, h_finished, h_unfinished = 0, 0, 0, 0
+        is_presented = False
+        for task in self.orders:
+            if task.programmer == programmer:
+                is_presented = True
+                if task.is_finished():
+                    n_finished += 1
+                    h_finished += task.workload
+                else:
+                    n_unfinished += 1
+                    h_unfinished += task.workload
+        if not is_presented:
+            raise ValueError("No programmer")
+        return n_finished, n_unfinished, h_finished, h_unfinished
 
 
 if __name__ == "__main__":
@@ -81,3 +103,16 @@ if __name__ == "__main__":
 
     for order in orders.all_orders():
         print(order)
+
+    print("\n##### Part 4 #####")
+    orders = OrderBook()
+    orders.add_order("program webstore", "Adele", 10)
+    orders.add_order("program mobile app for workload accounting", "Adele", 25)
+    orders.add_order("program app for practising mathematics", "Adele", 100)
+    orders.add_order("program the next facebook", "Eric", 1000)
+
+    orders.mark_finished(1)
+    orders.mark_finished(2)
+
+    status = orders.status_of_programmer("Adele")
+    print(status)
