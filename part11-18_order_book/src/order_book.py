@@ -35,6 +35,12 @@ class OrderBook:
     def programmers(self):
         return list(self.all_programmers)
 
+    def mark_finished(self, id):
+        idx_id = id - 1
+        if idx_id >= len(self.orders):
+            raise ValueError("The input was negative: " + str(n))
+        self.orders[idx_id].mark_finished()
+
 
 if __name__ == "__main__":
     print("##### Part 1 #####")
@@ -63,3 +69,15 @@ if __name__ == "__main__":
 
     for programmer in orders.programmers():
         print(programmer)
+
+    print("\n##### Part 3 #####")
+    orders = OrderBook()
+    orders.add_order("program webstore", "Adele", 10)
+    orders.add_order("program mobile app for workload accounting", "Eric", 25)
+    orders.add_order("program app for practising mathematics", "Adele", 100)
+
+    orders.mark_finished(1)
+    orders.mark_finished(2)
+
+    for order in orders.all_orders():
+        print(order)
