@@ -35,11 +35,12 @@ class OrderBook:
     def programmers(self):
         return list(self.all_programmers)
 
-    def mark_finished(self, id):
-        idx_id = id - 1
-        if idx_id >= len(self.orders):
-            raise ValueError("Id out of range")
-        self.orders[idx_id].mark_finished()
+    def mark_finished(self, id: int):
+        for task in self.orders:
+            if task.id == id:
+                task.mark_finished()
+                return
+        raise ValueError(f"No task with id {id}")
 
     def unfinished_orders(self):
         return [task for task in self.orders if not task.is_finished()]
